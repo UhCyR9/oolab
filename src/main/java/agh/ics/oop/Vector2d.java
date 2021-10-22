@@ -47,6 +47,7 @@ public class Vector2d {
         return new Vector2d(x-other.x,y-other.y);
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
