@@ -19,39 +19,21 @@ public class World {
                 }
             }
         }
-
         run(directions);
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+        System.out.println();
+
+
         System.out.println("Stop");
     }
 
+
     public static void run(ArrayList<Direction> directions)
     {
-//        System.out.println("Zwierzak idzie do przodu");
-//        for (int i = 0; i < directions.length;i++)
-//        {
-//            if (i != 0)
-//            {
-//                System.out.print(", " + directions[i]);
-//            }
-//            else
-//            {
-//                System.out.print(directions[i]);
-//            }
-//        }
-//        System.out.println();
-
-//        for (String direction : directions)
-//        {
-//            switch (direction) {
-//                case "f" -> System.out.println("Zwierzak idzie do przodu");
-//                case "b" -> System.out.println("Zwierzak idzie do tylu");
-//                case "r" -> System.out.println("Zwierzak idzie w prawo");
-//                case "l" -> System.out.println("Zwierzak idzie w lewo");
-//                default -> {
-//                }
-//            }
-//        }
-
         for (Direction dir : directions)
         {
             switch (dir) {
@@ -63,7 +45,5 @@ public class World {
                 }
             }
         }
-
-
     }
 }
