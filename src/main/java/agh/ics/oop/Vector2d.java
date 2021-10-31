@@ -21,7 +21,7 @@ public class Vector2d {
     {
         return x <= other.x && y <= other.y;
     }
-
+//    (5,2) (4,4)
     public boolean follows(Vector2d other)
     {
         return x >= other.x && y >= other.y;
