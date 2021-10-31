@@ -11,7 +11,7 @@ public class OptionsParserTest {
     @Test
     void parseTest() {
         OptionsParser parser = new OptionsParser();
-        String[] test = {"f", "backward", "l", "right", "r", "left", "forward", "b"};
+        String[] test = {"f", "backward", "l", "right","s", "r", "left", "forward", "b", "nothing"};
 
         ArrayList<MoveDirection> test2 = new ArrayList<>();
         test2.add(MoveDirection.FORWARD);
