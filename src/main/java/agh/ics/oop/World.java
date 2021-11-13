@@ -6,29 +6,12 @@ public class World {
     public static void main(String[] args)
     {
         System.out.println("Start");
-        ArrayList<Direction> directions = new ArrayList<>();
 
-        for (String arg : args)
-        {
-            switch (arg) {
-                case "f" -> directions.add(Direction.FORWARD);
-                case "b" -> directions.add(Direction.BACKWARD);
-                case "r" -> directions.add(Direction.RIGHT);
-                case "l" -> directions.add(Direction.LEFT);
-                default -> {
-                }
-            }
-        }
-        run(directions);
-        OptionsParser parser = new OptionsParser();
-        ArrayList<MoveDirection> moves = parser.parse(args);
-
-        Animal snake = new Animal();
-        for (MoveDirection move : moves)
-        {
-            snake.move(move);
-            System.out.println(snake);
-        }
+        ArrayList<MoveDirection> directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
 
         System.out.println("Stop");
     }
