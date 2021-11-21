@@ -1,62 +1,31 @@
 package agh.ics.oop;
 
-import java.util.LinkedList;
-
-public class RectangularMap implements IWorldMap
+public class RectangularMap extends AbstractWorldMap implements IWorldMap
 {
-    private Vector2d upperRight;
-    private Vector2d lowerLeft = new Vector2d(0,0);
-    private LinkedList<Animal> animals = new LinkedList<>();
-
     public RectangularMap(int width, int height)
     {
         upperRight = new Vector2d(width,height);
+        lowerLeft = new Vector2d(0,0);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position)
     {
-        return position.precedes(upperRight) && position.follows(lowerLeft) && !isOccupied(position);
-    }
-
-    @Override
-    public boolean place(Animal animal)
-    {
-        if (canMoveTo(animal.getPosition()))
+        if (!(position.precedes(upperRight) && position.follows(lowerLeft)))
         {
-            animals.add(animal);
-            return true;
+            return false;
         }
-        return false;
-    }
 
-    @Override
-    public boolean isOccupied(Vector2d position)
-    {
-        for (Animal animal : animals)
+        for (IMapElement element : impassable)
         {
-            if(animal.getPosition().equals(position))
+            if(element.getPosition().equals(position))
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
-    public Object objectAt(Vector2d position) {
-        for (Animal animal : animals)
-        {
-            if(animal.getPosition().equals(position))
-            {
-                return animal;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return new MapVisualizer(this).draw(lowerLeft,upperRight);
-    }
+    public void updateBoundaries() {}
 }

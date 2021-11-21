@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public class Animal
+public class Animal implements IMapElement
 {
     private MapDirection orientation;
     private Vector2d position;
@@ -47,6 +47,7 @@ public class Animal
         return orientation;
     }
 
+    @Override
     public Vector2d getPosition() {
         return position;
     }
