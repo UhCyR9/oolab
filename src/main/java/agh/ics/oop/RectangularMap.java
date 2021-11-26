@@ -11,19 +11,7 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap
     @Override
     public boolean canMoveTo(Vector2d position)
     {
-        if (!(position.precedes(upperRight) && position.follows(lowerLeft)))
-        {
-            return false;
-        }
-
-        for (IMapElement element : impassable)
-        {
-            if(element.getPosition().equals(position))
-            {
-                return false;
-            }
-        }
-        return true;
+        return (position.precedes(upperRight) && position.follows(lowerLeft)) && !impassable.containsKey(position);
     }
 
     @Override

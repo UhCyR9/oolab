@@ -6,7 +6,6 @@ public class World {
     public static void main(String[] args)
     {
         System.out.println("Start");
-
         ArrayList<MoveDirection> directions = new OptionsParser().parse(args);
         IWorldMap map = new GrassField(10);
         System.out.println(map);

@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +15,7 @@ public class GrassFieldTest {
     @Test
     void grassTest()
     {
-        Hashtable<Vector2d,IMapElement> passable = map.getPassable();
+        Map<Vector2d,IMapElement> passable = map.getPassable();
         assertEquals(10,passable.size());
 
         int maxXY = (int)sqrt(10*10)+1;
@@ -43,6 +43,11 @@ public class GrassFieldTest {
     void isOccupied()
     {
         assertTrue(map.isOccupied(new Vector2d(1,1)));
+        System.out.println(map);
+        animal1.move(MoveDirection.FORWARD);
+        animal1.move(MoveDirection.FORWARD);
+        System.out.println(map);
+        assertTrue(map.isOccupied(new Vector2d(1,3)));
     }
 
     @Test

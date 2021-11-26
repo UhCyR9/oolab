@@ -1,10 +1,14 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Animal implements IMapElement
 {
     private MapDirection orientation;
     private Vector2d position;
     private IWorldMap map;
+    private ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
     public Animal() // Niezbyt ma sens, nie dodaje zwierzęcia do mapy
     {
@@ -78,17 +82,37 @@ public class Animal implements IMapElement
             case FORWARD -> {
                 tmp = position.add(orientation.tuUnitVector());
                 if (map.canMoveTo(tmp)) {
+                    positionChanged(this.position,tmp);
                     position = tmp;
                 }
             }
             case BACKWARD -> {
                 tmp = position.add(orientation.tuUnitVector().opposite());
                 if (map.canMoveTo(tmp)) {
+                    positionChanged(this.position,tmp);
                     position = tmp;
                 }
             }
             default -> {
             }
+        }
+    }
+
+    public void addObserver(IPositionChangeObserver observer)
+    {
+        observers.add(observer);
+    }
+
+    public void removeObserver(IPositionChangeObserver observer)
+    {
+        observers.remove(observer);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
+    {
+        for (IPositionChangeObserver observer : observers)
+        {
+            observer.positionChanged(oldPosition, newPosition);
         }
     }
 }

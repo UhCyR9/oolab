@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RectangularMapTest {
-    IWorldMap map = new RectangularMap(5, 5);
+    AbstractWorldMap map = new RectangularMap(5, 5);
     Animal animal1 = new Animal(map, new Vector2d(1, 1));
 
     @Test

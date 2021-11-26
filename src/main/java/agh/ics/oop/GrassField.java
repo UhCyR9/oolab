@@ -6,7 +6,7 @@ import java.util.Random;
 import static java.lang.Math.*;
 
 
-public class GrassField extends AbstractWorldMap implements IWorldMap{
+public class GrassField extends AbstractWorldMap{
     private int grassAmount;
 
     public GrassField(int amount)
@@ -34,22 +34,11 @@ public class GrassField extends AbstractWorldMap implements IWorldMap{
     @Override
     public boolean canMoveTo(Vector2d position)
     {
-        if (!(position.follows(new Vector2d(0,0))))
-        {
-            return false;
-        }
-        for (IMapElement element : impassable)
-        {
-            if(element.getPosition().equals(position))
-            {
-                return false;
-            }
-        }
-        return true;
+        return position.follows(new Vector2d(0, 0)) && !impassable.containsKey(position);
     }
 
     public void updateBoundaries() {
-        for (IMapElement element : impassable)
+        for (IMapElement element : impassable.values())
         {
             lowerLeft = lowerLeft.lowerLeft(element.getPosition());
             upperRight = upperRight.upperRight(element.getPosition());

@@ -1,22 +1,33 @@
 package agh.ics.oop;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap {
+public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorldMap {
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
-    protected LinkedList<IMapElement> impassable = new LinkedList<>();
-    protected Hashtable<Vector2d, IMapElement> passable = new Hashtable<>();
+    protected Map<Vector2d,IMapElement> impassable = new LinkedHashMap<>();
+    protected Map<Vector2d, IMapElement> passable = new HashMap<>();
 
     public abstract boolean canMoveTo(Vector2d position);
 
-    public LinkedList<IMapElement> getImpassable() {
+    public Map<Vector2d,IMapElement> getImpassable() {
         return impassable;
     }
 
-    public Hashtable<Vector2d, IMapElement> getPassable() {
+    public Map<Vector2d, IMapElement> getPassable() {
         return passable;
+    }
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        if (impassable.containsKey(oldPosition))
+        {
+            IMapElement tmp = impassable.get(oldPosition);
+            impassable.put(newPosition, tmp);
+            impassable.remove(oldPosition);
+        }
     }
 
     @Override
@@ -24,7 +35,8 @@ public abstract class AbstractWorldMap implements IWorldMap {
     {
         if (canMoveTo(animal.getPosition()))
         {
-            impassable.add(animal);
+            impassable.put(animal.getPosition(), animal);
+            animal.addObserver(this);
             return true;
         }
         return false;
@@ -33,29 +45,14 @@ public abstract class AbstractWorldMap implements IWorldMap {
     @Override
     public boolean isOccupied(Vector2d position)
     {
-        if (passable.containsKey(position))
-        {
-            return true;
-        }
-
-        for (IMapElement element : impassable)
-        {
-            if(element.getPosition().equals(position))
-            {
-                return true;
-            }
-        }
-        return false;
+        return passable.containsKey(position) || impassable.containsKey(position);
     }
 
     @Override
     public Object objectAt(Vector2d position) {
-        for (IMapElement element : impassable)
+        if (impassable.containsKey(position))
         {
-            if(element.getPosition().equals(position))
-            {
-                return element;
-            }
+            return impassable.get(position);
         }
 
         if (passable.containsKey(position))
