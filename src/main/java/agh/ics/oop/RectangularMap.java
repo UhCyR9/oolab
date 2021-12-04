@@ -13,7 +13,4 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap
     {
         return (position.precedes(upperRight) && position.follows(lowerLeft)) && !impassable.containsKey(position);
     }
-
-    @Override
-    public void updateBoundaries() {}
 }

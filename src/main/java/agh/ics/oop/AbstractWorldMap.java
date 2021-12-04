@@ -9,6 +9,7 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
     protected Vector2d upperRight;
     protected Map<Vector2d,IMapElement> impassable = new LinkedHashMap<>();
     protected Map<Vector2d, IMapElement> passable = new HashMap<>();
+    protected MapBoundary mapBoundary = new MapBoundary(this);
 
     public abstract boolean canMoveTo(Vector2d position);
 
@@ -20,6 +21,18 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
         return passable;
     }
 
+    public Vector2d getLowerLeft()
+    {
+        this.updateBoundaries();
+        return lowerLeft;
+    }
+
+    public Vector2d getUpperRight()
+    {
+        this.updateBoundaries();
+        return upperRight;
+    }
+
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         if (impassable.containsKey(oldPosition))
@@ -27,6 +40,7 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
             IMapElement tmp = impassable.get(oldPosition);
             impassable.put(newPosition, tmp);
             impassable.remove(oldPosition);
+            mapBoundary.positionChanged(oldPosition,newPosition);
         }
     }
 
@@ -35,11 +49,12 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
     {
         if (canMoveTo(animal.getPosition()))
         {
+            mapBoundary.add(animal);
             impassable.put(animal.getPosition(), animal);
             animal.addObserver(this);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Position " + animal.getPosition() + " is already occupied");
     }
 
     @Override
@@ -63,7 +78,10 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
         return null;
     }
 
-    public abstract void updateBoundaries();
+    public void updateBoundaries() {
+        lowerLeft = mapBoundary.getLowerLeft();
+        upperRight = mapBoundary.getUpperRight();
+    }
 
     @Override
     public String toString() {

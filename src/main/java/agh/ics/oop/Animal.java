@@ -18,32 +18,18 @@ public class Animal implements IMapElement
 
     public Animal(IWorldMap map)
     {
-        if(map.canMoveTo(new Vector2d(0,0)))
-        {
             this.map = map;
             position = new Vector2d(0,0);
             this.map.place(this);
             orientation = MapDirection.NORTH;
-        }
-        else
-        {
-            System.out.println("Position occupied");
-        }
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition)
     {
-        if(map.canMoveTo(initialPosition))
-        {
             this.map = map;
             position = initialPosition;
             this.map.place(this);
             orientation = MapDirection.NORTH;
-        }
-        else
-        {
-            System.out.println("Position occupied");
-        }
     }
 
 

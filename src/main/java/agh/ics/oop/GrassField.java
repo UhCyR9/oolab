@@ -24,24 +24,15 @@ public class GrassField extends AbstractWorldMap{
                 tmp = new Vector2d(random.nextInt(maxXY),random.nextInt(maxXY));
             }
 
-            lowerLeft = lowerLeft.lowerLeft(tmp);
-            upperRight = upperRight.upperRight(tmp);
-
-            passable.put(tmp,new Grass(tmp));
+            Grass grass = new Grass(tmp);
+            mapBoundary.add(grass);
+            passable.put(tmp,grass);
         }
     }
 
     @Override
     public boolean canMoveTo(Vector2d position)
     {
-        return position.follows(new Vector2d(0, 0)) && !impassable.containsKey(position);
-    }
-
-    public void updateBoundaries() {
-        for (IMapElement element : impassable.values())
-        {
-            lowerLeft = lowerLeft.lowerLeft(element.getPosition());
-            upperRight = upperRight.upperRight(element.getPosition());
-        }
+        return !impassable.containsKey(position);
     }
 }

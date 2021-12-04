@@ -13,6 +13,12 @@ public class RectangularMapTest {
     void placeTest()
     {
         assertEquals(map, animal1.getMap());
+        try {
+            Animal animal2 = new Animal(map,new Vector2d(1,1));
+        }
+        catch (IllegalArgumentException ex) {
+            assertTrue(true);
+        }
     }
 
     @Test
