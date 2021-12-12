@@ -30,7 +30,7 @@ public class App extends Application {
 
         GridPane grid = createGrid(lowerLeft,upperRight, map);
 
-        Scene scene = new Scene(grid,800,800);
+        Scene scene = new Scene(grid,400,400);
 
         primaryStage.setScene(scene);
         primaryStage.show();

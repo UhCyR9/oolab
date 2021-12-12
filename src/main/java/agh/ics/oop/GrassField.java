@@ -25,7 +25,7 @@ public class GrassField extends AbstractWorldMap{
             }
 
             Grass grass = new Grass(tmp);
-            mapBoundary.add(grass);
+            mapBoundary.add(grass.getPosition());
             passable.put(tmp,grass);
         }
     }

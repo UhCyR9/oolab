@@ -5,74 +5,77 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver {
-    private IWorldMap map;
-    private TreeSet<IMapElement> xAxis = new TreeSet<>(new Comparator<IMapElement>()
+    private TreeSet<Vector2d> xAxis = new TreeSet<>(new Comparator<>()
     {
        @Override
-       public int compare(IMapElement el1, IMapElement el2) {
-           Vector2d el1Position = el1.getPosition();
-           Vector2d el2Position = el2.getPosition();
+       public int compare(Vector2d el1, Vector2d el2) {
 
-           if(el1Position.x == el2Position.x)
+           if(el1.x == el2.x)
            {
-               return el1Position.y - el2Position.y;
+               if (el1.y == el2.y)
+               {
+                   return 1;
+               }
+               else
+               {
+                   return el1.y - el2.y;
+               }
            }
            else
            {
-               return el1Position.x - el2Position.x;
+               return el1.x - el2.x;
            }
        }
     });
 
-    private TreeSet<IMapElement> yAxis = new TreeSet<>(new Comparator<IMapElement>()
+    private TreeSet<Vector2d> yAxis = new TreeSet<>(new Comparator<>()
     {
         @Override
-        public int compare(IMapElement el1, IMapElement el2) {
-            Vector2d el1Position = el1.getPosition();
-            Vector2d el2Position = el2.getPosition();
+        public int compare(Vector2d el1, Vector2d el2) {
 
-            if(el1Position.y == el2Position.y)
+            if(el1.y == el2.y)
             {
-                return el1Position.x - el2Position.x;
+                if(el1.x == el2.x)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return el1.x - el2.x;
+                }
             }
             else
             {
-                return el1Position.y - el2Position.y;
+                return el1.y - el2.y;
             }
         }
     });
 
-    public MapBoundary(IWorldMap map)
-    {
-        this.map = map;
-    }
-
     public Vector2d getLowerLeft()
     {
-        return xAxis.first().getPosition().lowerLeft(yAxis.first().getPosition());
+        return xAxis.first().lowerLeft(yAxis.first());
     }
 
     public Vector2d getUpperRight()
     {
-        return xAxis.last().getPosition().upperRight(yAxis.last().getPosition());
+        return xAxis.last().upperRight(yAxis.last());
     }
 
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-        IMapElement element = (IMapElement)this.map.objectAt(newPosition);
-        this.remove(element);
-        this.add(element);
+        remove(oldPosition);
+        add(newPosition);
     }
 
-    public void add(IMapElement element)
+    public void add(Vector2d tmp)
     {
-        xAxis.add(element);
-        yAxis.add(element);
+        xAxis.add(tmp);
+        yAxis.add(tmp);
     }
 
-    public void remove(IMapElement element)
+    public void remove(Vector2d tmp)
     {
-        xAxis.remove(element);
-        yAxis.remove(element);
+        xAxis.remove(tmp);
+        yAxis.remove(tmp);
     }
 }

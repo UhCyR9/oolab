@@ -9,7 +9,7 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
     protected Vector2d upperRight;
     protected Map<Vector2d,IMapElement> impassable = new LinkedHashMap<>();
     protected Map<Vector2d, IMapElement> passable = new HashMap<>();
-    protected MapBoundary mapBoundary = new MapBoundary(this);
+    protected MapBoundary mapBoundary = new MapBoundary();
 
     public abstract boolean canMoveTo(Vector2d position);
 
@@ -49,7 +49,7 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
     {
         if (canMoveTo(animal.getPosition()))
         {
-            mapBoundary.add(animal);
+            mapBoundary.add(animal.getPosition());
             impassable.put(animal.getPosition(), animal);
             animal.addObserver(this);
             return true;
