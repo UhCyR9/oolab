@@ -42,6 +42,23 @@ public class Animal implements IMapElement
         return position;
     }
 
+    @Override
+    public String getName() {
+        return "Z " + this.position.toString();
+    }
+
+    @Override
+    public String getImage() {
+        switch (orientation)
+        {
+            case NORTH -> {return "src/main/resources/up.png";}
+            case EAST -> {return "src/main/resources/right.png";}
+            case SOUTH -> {return "src/main/resources/down.png";}
+            case WEST -> {return "src/main/resources/left.png";}
+        }
+        return null;
+    }
+
     public IWorldMap getMap(){
         return map;
     }
@@ -63,8 +80,14 @@ public class Animal implements IMapElement
     {
         Vector2d tmp;
         switch (direction) {
-            case RIGHT -> orientation = orientation.next();
-            case LEFT -> orientation = orientation.previous();
+            case RIGHT -> {
+                orientation = orientation.next();
+                positionChanged(this.position,this.position);
+            }
+            case LEFT -> {
+                orientation = orientation.previous();
+                positionChanged(this.position,this.position);
+            }
             case FORWARD -> {
                 tmp = position.add(orientation.tuUnitVector());
                 if (map.canMoveTo(tmp)) {

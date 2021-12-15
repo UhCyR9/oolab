@@ -38,8 +38,8 @@ public abstract class AbstractWorldMap implements IPositionChangeObserver, IWorl
         if (impassable.containsKey(oldPosition))
         {
             IMapElement tmp = impassable.get(oldPosition);
-            impassable.put(newPosition, tmp);
             impassable.remove(oldPosition);
+            impassable.put(newPosition, tmp);
             mapBoundary.positionChanged(oldPosition,newPosition);
         }
     }

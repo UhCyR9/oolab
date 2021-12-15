@@ -7,4 +7,8 @@ public interface IMapElement  {
     default boolean isAt(Vector2d position) {
         return this.getPosition().equals(position);
     }
+
+    String getName();
+
+    String getImage();
 }
