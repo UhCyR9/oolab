@@ -74,13 +74,14 @@ public class App extends Application implements IPositionChangeObserver {
             String[] newDirections = input.getText().split(" ");
             try {
                 simulationEngine.setMoveDirections(new OptionsParser().parse(newDirections));
+                Thread newThread = new Thread(simulationEngine);
+                newThread.start();
             }
             catch (IllegalArgumentException e)
             {
                 System.out.println(e);
             }
-            Thread newThread = new Thread(simulationEngine);
-            newThread.start();
+
         });
     }
 
