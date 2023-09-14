@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class Animal implements IMapElement
 {
+    
     private MapDirection orientation;
     private Vector2d position;
     private IWorldMap map;
